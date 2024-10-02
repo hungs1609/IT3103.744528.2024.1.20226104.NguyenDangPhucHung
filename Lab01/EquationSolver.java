@@ -57,7 +57,6 @@ public class EquationSolver {
 
 		// Giai he phuong trinh
 		Double x1, x2;
-
 		if (d != 0.0) {
 			x1 = d1 / d;
 			x2 = d2 / d;
@@ -69,7 +68,6 @@ public class EquationSolver {
 				System.out.println("He vo nghiem.");
 			}
 		}
-
 		// GIAI PHUONG TRINH DA THUC BAC 2
 		System.out.println("===============================");
 		System.out.println("Giai he phuong trinh a * x^2 + b * x + c = 0");
@@ -84,7 +82,6 @@ public class EquationSolver {
 
 		// Tinh delta
 		Double delta = b_hungndp * b_hungndp - 4 * a * c;
-
 		if (delta < 0) {
 
 			System.out.println("Phuong trinh vo nghiem.");
@@ -100,7 +97,6 @@ public class EquationSolver {
 			System.out.println("x1 = " + qx1);
 			System.out.println("x2 = " + qx2);
 		}
-
 		sc.close();
 	}
 }
