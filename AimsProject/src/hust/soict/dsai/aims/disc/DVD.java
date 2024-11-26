@@ -1,4 +1,5 @@
-package Lab02.Code;
+package hust.soict.dsai.aims.disc;
+
 
 import java.util.List;
 
