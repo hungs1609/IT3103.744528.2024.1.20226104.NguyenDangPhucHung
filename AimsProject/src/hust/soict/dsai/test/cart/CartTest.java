@@ -1,5 +1,10 @@
 package hust.soict.dsai.test.cart;
 
+
+import java.util.*;
+import hust.soict.dsai.aims.disc.*;
+import hust.soict.dsai.aims.cart.*;
+
 public class CartTest {
     public static void main(String[] args) {
         Cart cart = new Cart();
@@ -14,5 +19,12 @@ public class CartTest {
         cart.addDigitalVideoDisc(dvd3);
 
         cart.printCart();
+        
+        cart.searchById(1);
+        cart.searchById(4);
+
+        cart.searchByTitle("The Lion King");
+        cart.searchByTitle("Star Wars");
+        cart.searchByTitle("The Matrix");
     }
 }

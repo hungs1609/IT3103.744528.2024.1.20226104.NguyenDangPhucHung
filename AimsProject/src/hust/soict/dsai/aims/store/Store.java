@@ -1,36 +1,30 @@
-package hust.soict.dsai.aims.store;
+package hust.soict.dsai.aims;
 
-public class Store {
-    private DVD[] itemsInStore;
-    private int numberOfItems; 
+import hust.soict.dsai.aims.cart.Cart;
+import hust.soict.dsai.aims.disc.DVD;
 
-    public Store(int capacity) {
-        itemsInStore = new DVD[capacity];
-        numberOfItems = 0;
-    }
+public class Aims {
+    public static void main(String[] args) {
+        Cart anOrder = new Cart();
 
-    public void addDVD(DVD dvd) {
-        if (numberOfItems < itemsInStore.length) {
-            itemsInStore[numberOfItems] = dvd;
-            numberOfItems++;
-            System.out.println("Added DVD '" + dvd.getName() + "' to the store.");
-        } else {
-            System.out.println("Store is full. Cannot add more DVDs.");
-        }
-    }
+        DVD dvd1 = new DVD("The Lion King", "Animation", "Roger Allers", 87, 19.95f);
+        anOrder.addDigitalVideoDisc(dvd1);
 
-    public void removeDVD(String dvdTitle) {
-        for (int i = 0; i < numberOfItems; i++) {
-            if (itemsInStore[i].getName().equals(dvdTitle)) {
-                for (int j = i; j < numberOfItems - 1; j++) {
-                    itemsInStore[j] = itemsInStore[j + 1];
-                }
-                itemsInStore[numberOfItems - 1] = null;
-                numberOfItems--;
-                System.out.println("Removed DVD '" + dvdTitle + "' from the store.");
-                return;
-            }
-        }
-        System.out.println("DVD '" + dvdTitle + "' not found in the store.");
+        DVD dvd2 = new DVD("Star Wars", "Science Fiction", "George Lucas", 87, 24.95f);
+        anOrder.addDigitalVideoDisc(dvd2);
+
+        DVD dvd3 = new DVD("Aladdin", "Animation", 18.99f);
+        anOrder.addDigitalVideoDisc(dvd3);
+
+        System.out.println("Total Cost is: ");
+        System.out.println(anOrder.totalCost());
+
+        System.out.println("List before remove:");
+        anOrder.printCart();
+
+        anOrder.removeDigitalVideoDisc("Star Wars");
+
+        System.out.println("\nList after remove:");
+        anOrder.printCart(); 
     }
 }

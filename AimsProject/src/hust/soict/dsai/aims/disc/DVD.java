@@ -1,6 +1,5 @@
 package hust.soict.dsai.aims.disc;
 
-
 import java.util.List;
 
 public class DVD {
@@ -13,9 +12,31 @@ public class DVD {
     int releaseDate;
     String category;
     String author;
+    private int dvdID;
 
+    public int getId() {
+        return dvdID;
+    }
+
+    public void setId(int dvdID) {
+        this.dvdID = dvdID;
+    }
+
+    public DVD(String name) {
+    	this.name = name;
+    }
+    
     public DVD(String name, String genre, String author, int releaseDate, double price) {
         this.name = name;
+        this.genre = genre;
+        this.author = author;
+        this.releaseDate = releaseDate;
+        this.price = price;
+    }
+
+    public DVD(String name, String category, String genre, String author, int releaseDate, double price) {
+        this.name = name;
+        this.category = category;
         this.genre = genre;
         this.author = author;
         this.releaseDate = releaseDate;
@@ -50,8 +71,20 @@ public class DVD {
         this.releaseDate = releaseDate;
     }
 
+    public String getCategory() {
+        return category;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+    
     public String getName() {
         return name;
+    }
+    
+    public void setName(String name) {
+    	this.name = name;
     }
 
     public String getDescription() {
@@ -62,6 +95,10 @@ public class DVD {
         return price;
     }
 
+    public int getReleaseDate() {
+    	return releaseDate;
+    }
+    
     public int getQuantityInStock() {
         return quantityInStock;
     }
