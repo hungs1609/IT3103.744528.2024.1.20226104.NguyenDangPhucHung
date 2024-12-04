@@ -1,30 +1,26 @@
-package hust.soict.dsai.aims;
+package hust.soict.dsai.aims.store;
+import java.util.ArrayList;
 
-import hust.soict.dsai.aims.cart.Cart;
-import hust.soict.dsai.aims.disc.DVD;
+import hust.soict.dsai.aims.media.Media;
 
-public class Aims {
-    public static void main(String[] args) {
-        Cart anOrder = new Cart();
+public class Store {
+    private ArrayList<Media> itemsInStore;
 
-        DVD dvd1 = new DVD("The Lion King", "Animation", "Roger Allers", 87, 19.95f);
-        anOrder.addDigitalVideoDisc(dvd1);
+    public ArrayList<Media> getItemsInStore() {
+		return itemsInStore;
+	}
 
-        DVD dvd2 = new DVD("Star Wars", "Science Fiction", "George Lucas", 87, 24.95f);
-        anOrder.addDigitalVideoDisc(dvd2);
+	public Store() {
+        itemsInStore = new ArrayList<Media>();
+    }
+	
+	public void addMedia(Media media) {
+        itemsInStore.add(media);
+        System.out.println("Media \"" + media.getTitle() + "\" added to store.");
+    }
 
-        DVD dvd3 = new DVD("Aladdin", "Animation", 18.99f);
-        anOrder.addDigitalVideoDisc(dvd3);
-
-        System.out.println("Total Cost is: ");
-        System.out.println(anOrder.totalCost());
-
-        System.out.println("List before remove:");
-        anOrder.printCart();
-
-        anOrder.removeDigitalVideoDisc("Star Wars");
-
-        System.out.println("\nList after remove:");
-        anOrder.printCart(); 
+    public void removeMedia(Media media) {
+        itemsInStore.remove(media);
+        System.out.println("Media \"" + media.getTitle() + "\" removed from store.");
     }
 }

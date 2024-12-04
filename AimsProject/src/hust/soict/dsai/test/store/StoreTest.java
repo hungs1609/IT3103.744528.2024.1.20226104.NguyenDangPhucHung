@@ -1,22 +1,33 @@
 package hust.soict.dsai.test.store;
-
-import hust.soict.dsai.aims.disc.DVD;
+import hust.soict.dsai.aims.media.DigitalVideoDisc;
+import hust.soict.dsai.aims.media.Media;
 import hust.soict.dsai.aims.store.Store;
 
 public class StoreTest {
-    public static void main(String[] args) {
-        Store store = new Store(5);
 
-        DVD dvd1 = new DVD("The Lion King", "Animation", "Roger Allers", 87, 19.95f);
-        DVD dvd2 = new DVD("Star Wars", "Science Fiction", "George Lucas", 87, 24.95f);
-        DVD dvd3 = new DVD("Aladdin", "Animation", "John Musker, Ron Clements", 90, 18.99f); 
-
-        store.addDVD(dvd1);
-        store.addDVD(dvd2);
-        store.addDVD(dvd3);
-
-        store.removeDVD("Star Wars");
-
-        store.removeDVD("The Matrix");
-    }
+	public static void main(String[] args) {
+		Store store = new Store();
+		
+		DigitalVideoDisc dvd1 = new DigitalVideoDisc(1, "The Lion King", "Animation", 19.95f, 87, "Roger Allers");
+		store.addMedia(dvd1);
+		
+		DigitalVideoDisc dvd2 = new DigitalVideoDisc(2, "Star Wars", "Science Fiction", 24.95f, 87, "George Lucas");
+		store.addMedia(dvd2);
+		
+		DigitalVideoDisc dvd3 = new DigitalVideoDisc(3, "Aladdin", "Animation", 18.99f, 115, "Walt Disney");
+		store.addMedia(dvd3);
+		
+		DigitalVideoDisc dvd4 = new DigitalVideoDisc(4, "Harry Potter and the Chamber of Secret", "Animation", 22.95f, 104, "Chris Columbus");
+		store.addMedia(dvd4);
+		
+		for (Media dvd : store.getItemsInStore()) {
+			System.out.println(dvd.getTitle() + ", ID = " + dvd.getId());
+		}
+		
+		store.removeMedia(dvd3);
+		
+		for (Media dvd : store.getItemsInStore()) {
+			System.out.println(dvd.getTitle() + ", ID = " + dvd.getId());
+		}
+	}
 }
