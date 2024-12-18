@@ -1,14 +1,19 @@
 package hust.soict.dsai.aims;
-import java.util.ArrayList;
-import java.util.Scanner;
+import java.util.*;
+
+import javax.naming.LimitExceededException;
 
 import hust.soict.dsai.aims.cart.Cart;
+import hust.soict.dsai.aims.exception.PlayerException;
 import hust.soict.dsai.aims.media.Book;
 import hust.soict.dsai.aims.media.CompactDisc;
 import hust.soict.dsai.aims.media.DigitalVideoDisc;
 import hust.soict.dsai.aims.media.Media;
 import hust.soict.dsai.aims.media.Track;
+import hust.soict.dsai.aims.screen.CartScreen;
+import hust.soict.dsai.aims.screen.StoreScreen;
 import hust.soict.dsai.aims.store.Store;
+import javafx.collections.ObservableList;
 
 public class Aims {
 	
@@ -28,15 +33,27 @@ public class Aims {
 			
 			if (option == 0) storeMenu(input, store, cart);
 			else if (option == 1) {
-				cart.addMedia(media);
+				try {
+					cart.addMedia(media);
+				} catch (LimitExceededException e) {
+					e.printStackTrace();
+				}
 				mediaDetailsMenu(input, cart, store, media);
 			} else if (option == 2) {
 				if (media instanceof CompactDisc) {
 					CompactDisc cd = (CompactDisc) media;
-					cd.play();
+					try {
+						cd.play();
+					} catch (PlayerException e) {
+						e.printStackTrace();
+					}
 				} else if (media instanceof DigitalVideoDisc) {
 					DigitalVideoDisc dvd = (DigitalVideoDisc) media;
-					dvd.play();
+					try {
+						dvd.play();
+					} catch (PlayerException e) {
+						e.printStackTrace();
+					}
 				}
 				mediaDetailsMenu(input, cart, store, media);
 			} else {
@@ -57,7 +74,11 @@ public class Aims {
 
 			if (option == 0) storeMenu(input, store, cart);
 			else if (option == 1) {
-				cart.addMedia(media);
+				try {
+					cart.addMedia(media);
+				} catch (LimitExceededException e) {
+					e.printStackTrace();
+				}
 				mediaDetailsMenu(input, cart, store, media);
 			}  else {
 				System.out.println("Invalid input. Please reinput.");
@@ -89,7 +110,7 @@ public class Aims {
 			ArrayList<Media> itemsInStore = store.getItemsInStore();
 			boolean found = false;
 			for (Media media : itemsInStore) {
-				if (media.getTitle().equalsIgnoreCase(title)) { 
+				if (media.getTitle().equalsIgnoreCase(title)) { // đúng title (không cần đúng chữ in hoa)
 					System.out.println(media.toString());
 					mediaDetailsMenu(input, cart, store, media);
 					found = true;
@@ -109,9 +130,14 @@ public class Aims {
 			ArrayList<Media> itemsInStore = store.getItemsInStore();
 			boolean found = false;
 			for (Media media : itemsInStore) {
-				if (media.getTitle().equalsIgnoreCase(title)) { 
-					cart.addMedia(media);
+				if (media.getTitle().equalsIgnoreCase(title)) { // đúng title (không cần đúng chữ in hoa)
+					try {
+						cart.addMedia(media);
+					} catch (LimitExceededException e) {
+						e.printStackTrace();
+					}
 					
+					// nếu media vừa thêm là DVD thì print số lượng DVD trong cart
 					if (media instanceof DigitalVideoDisc) {
 						int numDVDinCart = 0;
 						for (Media m : cart.getItemsOrdered()) {
@@ -137,14 +163,22 @@ public class Aims {
 			ArrayList<Media> itemsInStore = store.getItemsInStore();
 			boolean found = false;
 			for (Media media : itemsInStore) {
-				if (media.getTitle().equalsIgnoreCase(title)) { 
+				if (media.getTitle().equalsIgnoreCase(title)) { // đúng title (không cần đúng chữ in hoa)
 					
 					if (media instanceof DigitalVideoDisc) {
 						DigitalVideoDisc mediadvd = (DigitalVideoDisc) media;
-						mediadvd.play();
+						try {
+							mediadvd.play();
+						} catch (PlayerException e) {
+							e.printStackTrace();
+						}
 					} else if (media instanceof CompactDisc) {
 						CompactDisc mediacd = (CompactDisc) media;
-						mediacd.play();
+						try {
+							mediacd.play();
+						} catch (PlayerException e) {
+							e.printStackTrace();
+						}
 					} else {
 						System.out.println("Media \"" + media.getTitle() + "\" is unplayable.");
 					}
@@ -358,17 +392,25 @@ public class Aims {
 			System.out.print("Enter media's title (ignore case): ");
 			String title = input.nextLine();
 			
-			ArrayList<Media> itemsOrdered = cart.getItemsOrdered();
+			ObservableList<Media> itemsOrdered = cart.getItemsOrdered();
 			boolean found = false;
 			for (Media media : itemsOrdered) {
-				if (media.getTitle().equalsIgnoreCase(title)) {
+				if (media.getTitle().equalsIgnoreCase(title)) { // đúng title (không cần đúng chữ in hoa)
 					
 					if (media instanceof DigitalVideoDisc) {
 						DigitalVideoDisc mediadvd = (DigitalVideoDisc) media;
-						mediadvd.play();
+						try {
+							mediadvd.play();
+						} catch (PlayerException e) {
+							e.printStackTrace();
+						}
 					} else if (media instanceof CompactDisc) {
 						CompactDisc mediacd = (CompactDisc) media;
-						mediacd.play();
+						try {
+							mediacd.play();
+						} catch (PlayerException e) {
+							e.printStackTrace();
+						}
 					} else {
 						System.out.println("Media \"" + media.getTitle() + "\" is unplayable.");
 					}
@@ -409,6 +451,7 @@ public class Aims {
 		
 		if (option == 0) System.exit(0);
 		else if (option == 1) {
+			new StoreScreen(store, cart);
 			ArrayList<Media> itemsInStore = store.getItemsInStore();
 			System.out.println("**************** LIST OF ITEMS IN STORE ****************");
 			for (Media media : itemsInStore) {
@@ -419,6 +462,7 @@ public class Aims {
 		} else if (option == 2) {
 			updateStoreMenu(input, store, cart);
 		} else if (option == 3) {
+			new CartScreen(store, cart);
 			seeCurrentCart(input, store, cart);
 		} else {
 			System.out.println("Invalid input. Please reinput.");
@@ -432,6 +476,47 @@ public class Aims {
 		Cart cart = new Cart();
 		Scanner input = new Scanner(System.in);
 		
+		DigitalVideoDisc dvd1 = new DigitalVideoDisc(1, "DVD1 ", "cate1", 54, 220, "director1");
+		store.addMedia(dvd1);
+		store.addMedia(new DigitalVideoDisc(2, "DVD2 ", "cate2", 46, 165, "director2"));
+		store.addMedia(new DigitalVideoDisc(3, "DVD3 ", "cate3", 51, 167, "director3"));
+		store.addMedia(new Book(4, "Book1", "cate4", 36, new ArrayList<>(List.of("author1"))));
+		store.addMedia(new Book(5, "Book 2", "cate 5", 21, new ArrayList<>(List.of("author2", "author 3"))));
+		Book book3 = new Book(6, "Book 3", "cate 6", 28, new ArrayList<>(List.of("author4", "author 5")));
+		store.addMedia(book3);
+		ArrayList<Track> trackList = new ArrayList<Track>();
+		Track newTrack = new Track("track1", 60);
+    	trackList.add(newTrack);
+		store.addMedia(new CompactDisc(7, "CD 1", "cat7", 45, "artist1", trackList, "director4"));
+		trackList = new ArrayList<Track>();
+		newTrack = new Track("track2", 65);
+    	trackList.add(newTrack);
+    	CompactDisc cd2 = new CompactDisc(8, "CD 2", "cat8", 51, "artist2", trackList, "director5");
+		store.addMedia(cd2);
+		trackList = new ArrayList<Track>();
+		newTrack = new Track("track3", 43);
+    	trackList.add(newTrack);
+		newTrack = new Track("track4", 31);
+    	trackList.add(newTrack);
+		store.addMedia(new CompactDisc(9, "CD 3", "cat9", 61, "artist3", trackList, "director6"));
+		
+		try {
+			cart.addMedia(dvd1);
+		} catch (LimitExceededException e) {
+			e.printStackTrace();
+		}
+		try {
+			cart.addMedia(book3);
+		} catch (LimitExceededException e) {
+			e.printStackTrace();
+		}
+		try {
+			cart.addMedia(cd2);
+		} catch (LimitExceededException e) {
+			e.printStackTrace();
+		}
+		
+		new StoreScreen(store, cart);
 		showMenu(input, store, cart);
 		input.close();
 	}

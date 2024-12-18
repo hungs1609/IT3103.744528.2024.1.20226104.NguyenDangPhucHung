@@ -44,6 +44,7 @@ public abstract class Media {
 	}
 
 	public Media() {
+		// TODO Auto-generated constructor stub
 	}
 
 	public Media(int id, String title, String category, float cost) {
@@ -65,7 +66,7 @@ public abstract class Media {
 	    if (title == null || this.getTitle() == null || title.trim().isEmpty())
 	        return false;
 
-	    String[] words = title.toLowerCase().split("\\s+"); 
+	    String[] words = title.toLowerCase().split("\\s+"); // bởi vì không phân biệt chữ hoa chữ thường
 	    String loweredThisTitle = this.getTitle().toLowerCase();
 
 	    for (String word : words) {
@@ -77,11 +78,21 @@ public abstract class Media {
 	
 	@Override
 	public boolean equals(Object o) {
-	    if (this == o) return true; 
-	    
-	    if (o == null || getClass() != o.getClass()) return false; 
-	    
-	    Media media = (Media) o;  
-	    return this.title.equals(media.title);
+		try {
+	        if (this == o) return true;
+
+	        if (o == null || getClass() != o.getClass()) return false;
+
+	        Media media = (Media) o;
+	        return this.title != null && this.title.equals(media.title);
+	        
+	    } catch (NullPointerException e) {
+	        System.err.println("NullPointerException: Title của đối tượng hoặc đối tượng là null.");
+	        return false;
+	        
+	    } catch (ClassCastException e) {
+	        System.err.println("ClassCastException: Không thể ép kiểu đối tượng so sánh.");
+	        return false;
+	    }
 	}
 }

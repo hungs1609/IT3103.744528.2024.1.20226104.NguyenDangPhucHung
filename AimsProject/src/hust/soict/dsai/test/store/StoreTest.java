@@ -20,12 +20,14 @@ public class StoreTest {
 		DigitalVideoDisc dvd4 = new DigitalVideoDisc(4, "Harry Potter and the Chamber of Secret", "Animation", 22.95f, 104, "Chris Columbus");
 		store.addMedia(dvd4);
 		
+		// hiển thị danh sách tên các DVD trong store
 		for (Media dvd : store.getItemsInStore()) {
 			System.out.println(dvd.getTitle() + ", ID = " + dvd.getId());
 		}
 		
 		store.removeMedia(dvd3);
 		
+		// hiển thị danh sách tên các DVD trong store
 		for (Media dvd : store.getItemsInStore()) {
 			System.out.println(dvd.getTitle() + ", ID = " + dvd.getId());
 		}

@@ -1,16 +1,15 @@
 package hust.soict.dsai.aims.cart;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Scanner;
-
-import hust.soict.dsai.aims.media.Media; 
+import java.util.*;
+import javax.naming.LimitExceededException;
+import hust.soict.dsai.aims.media.Media;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList; 
 
 public class Cart {
-	public static final int MAX_NUMBERS_ORDERED = 20; 
-	private ArrayList<Media> itemsOrdered = new ArrayList<Media>();
+	public static final int MAX_NUMBERS_ORDERED = 20; // số lượng media tối đa có thể có
+	private ObservableList<Media> itemsOrdered = FXCollections.observableArrayList();
 	
-	public ArrayList<Media> getItemsOrdered() {
+	public ObservableList<Media> getItemsOrdered() {
 		return itemsOrdered;
 	}
 	
@@ -18,9 +17,9 @@ public class Cart {
 		Collections.sort(this.itemsOrdered, comparator);
 	}
 
-	public void addMedia(Media media) {
+	public void addMedia(Media media) throws LimitExceededException {
 		if (itemsOrdered.size() >= MAX_NUMBERS_ORDERED) {
-			System.out.println("Maximum number of medias reached, unable to add anymore to cart.");
+			throw new LimitExceededException("ERROR: Number of medias has reached its limit.");
 		} else {
 			boolean isIdentical = false;
 			for (Media media : itemsOrdered) {
@@ -49,8 +48,9 @@ public class Cart {
 		}
 	}
 
+	// phương thức trả về tổng giá các disc trong cart
 	public float totalCost() {
-		float sumCost = (float)0.0;
+		float sumCost = (float)0.0; // tổng giá các disc trong cart
 		for (Media media : itemsOrdered) {
 			sumCost += media.getCost();
 		}
@@ -58,6 +58,7 @@ public class Cart {
 		return sumCost;
 	}
 	
+	// hàm in danh sách các DVD đã đặt trong cart ()
 	public void printCart() {
 		System.out.println("********************** CART **********************");
 		System.out.println("Ordered items");
@@ -73,8 +74,9 @@ public class Cart {
 	public void searchMediabyID(Scanner input) {
 		System.out.println("**************************************************");
 		System.out.print("Input ID to search: ");
-		int inputID = input.nextInt(); 
-		int resultCount = 0; 
+		int inputID = input.nextInt(); // người dùng nhập id cần tra cứu
+		input.nextLine(); // bỏ qua \n ở sau inputID để các phần nhập xâu ở sau (nếu có) không bị ảnh hưởng
+		int resultCount = 0; // số kết quả trả về
 		for (Media media : itemsOrdered) {
 			if (inputID == media.getId()) {
 				resultCount++;
@@ -90,8 +92,8 @@ public class Cart {
 	public void searchMediabyTitle(Scanner input) {
 		System.out.println("**************************************************");
 		System.out.print("Input title to search: ");
-		String inputTitle = input.nextLine(); 
-		int resultCount = 0; 
+		String inputTitle = input.nextLine(); // người dùng nhập title cần tra cứu
+		int resultCount = 0; // số kết quả trả về
 		
 		for (Media media : itemsOrdered) {
 			if (media.isMatch(inputTitle)) {

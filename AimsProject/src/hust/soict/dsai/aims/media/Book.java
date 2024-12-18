@@ -14,6 +14,7 @@ public class Book extends Media {
 	}
 
 	public Book() {
+		// TODO Auto-generated constructor stub
 	}
 
 	public Book(int id, String title, String category, float cost, ArrayList<String> authors) {
@@ -22,7 +23,7 @@ public class Book extends Media {
 	}
 
 	public void addAuthor(String authorName) {
-		if (authors.contains(authorName)) { 
+		if (authors.contains(authorName)) { // nếu đã tồn tại tác giả rồi thì không add nữa
 			System.out.println("Author " + authorName + " already exists in the authors list.");
 		} else {
 			authors.add(authorName);
@@ -31,7 +32,7 @@ public class Book extends Media {
 	}
 	
 	public void removeAuthor(String authorName) {
-	    if (authors.contains(authorName)) { 
+	    if (authors.contains(authorName)) { // kiểm tra nếu danh sách có tác giả cần xóa
 	        authors.remove(authorName);
 	        System.out.println("Author " + authorName + " removed.");
 	    } else {
@@ -45,6 +46,7 @@ public class Book extends Media {
 	}
 	
 	public String toString() {
+		// 
 		return "Book - title: " + this.getTitle() +
 				" - category: " + this.getCategory() +
 				" - authors: " + this.authorToString() +
