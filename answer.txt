@@ -1,0 +1,5 @@
+Question:
+What happens if the Aims class is not updated to handle exceptions when the play() method is called?
+
+Answer:
+The exception will propagate through the call stack until it encounters a try-catch block or reaches the main() method. If the main() method does not catch the exception, the program will terminate immediately, and the console will display the stack trace. This makes the program less complete and harder to use.
